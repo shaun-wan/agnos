@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require 'sidekiq/web'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -23,5 +24,10 @@ module Agnos
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.action_cable.disable_request_forgery_protection = true
+    config.action_cable.url = "/cable"
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

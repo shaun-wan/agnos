@@ -4,7 +4,7 @@ class Order < ApplicationRecord
 
   before_save :update_completed_date, if: -> { status_changed? && completed? }
   after_touch :calculate_total_amount
-  after_save :send_notification
+  after_save :complete_order, :send_notification
 
   enum status: {
     pending: 0,
@@ -24,9 +24,23 @@ class Order < ApplicationRecord
     self.completed_at = Time.current
   end
 
+  # for demo purpose, update order status to 'completed' after 10 seconds when user made payment
+  def complete_order
+    return unless status_previously_changed? && paid?
+
+    CompleteOrderJob.set(wait: 10.seconds).perform_later(self)
+  end
+
   def send_notification
     return unless status_previously_changed? && completed?
 
-    # TODO: send notification to user
+    OrderNotificationChannel.broadcast_to(
+      self,
+      {
+        order_id: id,
+        status: status,
+        message: "Your order #{id} is ready!"
+      }
+    )
   end
 end

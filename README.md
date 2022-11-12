@@ -2,18 +2,13 @@
 
 A day at a coffee shop!
 
-- A customer visits a coffee shop that sells a bunch of items (e.g. beverages, sandwiches, etc.).
+This is a backend api service ordering system for coffee shop.
 
-- Items have varying tax rates and some are free or offered at a discount when ordered with another item.
+## Flow of the ordering system
+- User can view a list of bundle menu item or ala carte menu item.
+- User can add aforementioned items into a order cart. User can also update/delete their order items in their cart
+- User can make payment for their order cart.
+- Once payment is made, user will be notified of the order when it is ready
 
-- The customer is made aware of the order total and once he pays for it, he can wait until notified of the order completion.
-
-- You are required to describe a program with a set of interfaces that models the above problem at hand. You need to design the DB and backend architecture and implement it. 
-- Front-end is not mandatory but your endpoints should be reachable through Postman (please attach postman collection).
-
-- Users should be able to see the list of available items, User should be able to order them and should get a notification after a fixed amount of time that their order is ready.
-
-- Unit test cases are not mandatory.
-
-- Tech Stack - Ruby on Rails. You can also show us your front-end skills in some JS technologies (React/Angular, etc) or Bootstrap, or plain Html/JS.
-
+## Note
+Ensure `sidekiq` & `redis` is running for order notification feature to be enabled.

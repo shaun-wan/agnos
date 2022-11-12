@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  mount ActionCable.server => '/cable'
+
   namespace :api, format: :json do
     resources :categories, only: %i[index]
     resource :menu, only: [] do

@@ -13,4 +13,4 @@ AllCops:
     - 'Gemfile'
   
   Style/FrozenStringLiteralComment:
-    Enable: false
+    Enabled: false
