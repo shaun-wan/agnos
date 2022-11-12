@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resource :menu, only: [] do
       get '/:category_id', to: 'menu#show'
     end
+    get '/bundle-menu', to: 'menu#bundle_menu'
     resources :orders, only: %i[create show]
     resources :order_items, only: %i[create update destroy]
     resources :payments, only: %i[create]

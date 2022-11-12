@@ -5,7 +5,13 @@ module Api
 
       items = MenuItem.where(category: category, available: true)
 
-      render json: items
+      render json: MenuItemBlueprint.render(items)
+    end
+
+    def bundle_menu
+      bundle_items = BundleItem.includes(:first_menu_item, :second_menu_item).all
+
+      render json: BundleItemBlueprint.render(bundle_items)
     end
   end
 end

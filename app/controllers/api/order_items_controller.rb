@@ -29,7 +29,7 @@ module Api
     private
 
     def order_item_create_params
-      params.require(:order_item).permit(:order_id, :menu_item_id, :quantity, :note)
+      params.require(:order_item).permit(:order_id, :menu_item_id, :bundle_item_id, :quantity, :note)
     end
 
     def order_item_update_params

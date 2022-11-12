@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_11_134154) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_11_172410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bundle_items", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "first_menu_item_id"
+    t.bigint "second_menu_item_id"
+    t.integer "price_cents", null: false
+    t.integer "tax_rate_percentage", null: false
+    t.boolean "available", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["first_menu_item_id"], name: "index_bundle_items_on_first_menu_item_id"
+    t.index ["second_menu_item_id"], name: "index_bundle_items_on_second_menu_item_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -41,6 +54,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_134154) do
     t.bigint "menu_item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "bundle_item_id"
+    t.index ["bundle_item_id"], name: "index_order_items_on_bundle_item_id"
     t.index ["menu_item_id"], name: "index_order_items_on_menu_item_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
   end
@@ -61,7 +76,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_134154) do
     t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
+  add_foreign_key "bundle_items", "menu_items", column: "first_menu_item_id"
+  add_foreign_key "bundle_items", "menu_items", column: "second_menu_item_id"
   add_foreign_key "menu_items", "categories"
+  add_foreign_key "order_items", "bundle_items"
   add_foreign_key "order_items", "menu_items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "payments", "orders"

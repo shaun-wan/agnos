@@ -13,7 +13,7 @@ module Api
     private
 
     def order_id
-      params.require(:payment).dig(:order_id)
+      params.require(:payment)[:order_id]
     end
   end
 end

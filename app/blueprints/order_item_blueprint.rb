@@ -3,5 +3,7 @@ class OrderItemBlueprint < Blueprinter::Base
 
   fields :quantity, :total_amount_cents, :total_amount_pre_tax_cents
 
-  # enchancement: associate item_id
+  association :menu_item, blueprint: MenuItemBlueprint
+
+  association :bundle_item, blueprint: BundleItemBlueprint
 end
