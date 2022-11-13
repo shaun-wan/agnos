@@ -1,5 +1,6 @@
 module Api
   class PaymentsController < Api::ApiController
+    # for demo purpose, calling this endpoint will instantly create a successful payment.
     def create
       order = Order.find(order_id)
 
